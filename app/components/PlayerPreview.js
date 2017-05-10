@@ -1,17 +1,16 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 
-const PlayerPreview = ({ props }) => (
+const PlayerPreview = ({ avatar, username, id, onReset }) => (
   <div>
     <img
       className="avatar"
-      src={props.avatar}
-      alt={`Avatar for ${props.username}`}
+      src={avatar}
+      alt={`Avatar for ${username}`}
     />
-    <h2 className="username">@{props.username}</h2>
+    <h2 className="username">@{username}</h2>
     <button
       className="reset"
-      onClick={props.onReset.bind(null, props.id)}
+      onClick={() => onReset(id)}
     >
       Reset
     </button>
@@ -19,9 +18,9 @@ const PlayerPreview = ({ props }) => (
 );
 
 PlayerPreview.propTypes = {
-  avatar: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
-  onReset: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
+  avatar: React.PropTypes.string.isRequired,
+  username: React.PropTypes.string.isRequired,
+  onReset: React.PropTypes.func.isRequired,
+  id: React.PropTypes.string.isRequired,
 };
 module.exports = PlayerPreview;
