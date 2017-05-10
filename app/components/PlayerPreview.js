@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-const PlayerPreview = ({ avatar, username, id, onReset }) => (
+const PlayerPreview = ({ props }) => (
   <div>
     <img
       className="avatar"
-      src={avatar}
-      alt={`Avatar for ${username}`}
+      src={props.avatar}
+      alt={`Avatar for ${props.username}`}
     />
-    <h2 className="username">@{username}</h2>
+    <h2 className="username">@{props.username}</h2>
     <button
       className="reset"
-      onClick={onReset.bind(null, id)}
+      onClick={props.onReset.bind(null, props.id)}
     >
       Reset
     </button>
