@@ -2,17 +2,18 @@ import React, { Component } from 'react';
 import api from '../utils/api';
 
 
-const SelectLanguage = (props) => {
+const SelectLanguage = ({ selectedLanguage, onSelect }) => {
   const languages = ['All', 'JavaScript', 'Ruby', 'Java', 'CSS', 'Python'];
   return (
     <ul className="languages">
       {languages.map(lang =>
         (
           <li
-            style={lang === props.selectedLanguage ? {color: '#d0021b'} : null}
-            onClick={props.onSelect.bind(null, lang)}
-            key={lang}>
-              {lang}
+            onClick={() => onSelect(lang)}
+            key={lang}
+            style={lang === selectedLanguage ? { color: '#d0021b' } : null}
+          >
+            {lang}
           </li>
         ),
       )}
@@ -20,9 +21,9 @@ const SelectLanguage = (props) => {
   );
 };
 
-const RepoGrid = (props) => (
+const RepoGrid = ({ repos }) => (
   <ul className="popular-list">
-    {props.repos.map((repo, index) =>
+    {repos.map((repo, index) =>
       (
         <li key={repo.name} className="popular-item">
           <div className="popular-rank"> #{index + 1} </div>
@@ -58,24 +59,20 @@ class Popular extends Component {
     super(props);
     this.state = {
       selectedLanguage: 'All',
-      repos: null,
+      repos: [],
     };
     this.updateLanguage = this.updateLanguage.bind(this);
-  /*  this.onClick = this.onClick.bind(this);*/
   }
   componentDidMount() {
     this.updateLanguage(this.state.selectedLanguage);
   }
-/*  componentWillUnmount(){
+  /*  componentWillUnmount(){
     api.cancelFetch();
   }*/
   updateLanguage(lang) {
-    this.setState(() => ({
-      selectedLanguage: lang, repos: null,
-    }));
     api.fetchPopularRepos(lang)
     .then((repos) => {
-      this.setState(() => repos: repos);
+      this.setState({ repos, selectedLanguage: lang });
     });
   }
   render() {
@@ -85,9 +82,7 @@ class Popular extends Component {
           selectedLanguage={this.state.selectedLanguage}
           onSelect={this.updateLanguage}
         />
-        {!this.state.repos
-        ? <p>LOADING</p>
-        : <RepoGrid repos={this.state.repos} /> }
+        <RepoGrid repos={this.state.repos} />
       </div>
     );
   }
