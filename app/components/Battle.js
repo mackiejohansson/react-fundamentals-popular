@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PlayerInput from './PlayerInput';
 import PlayerPreview from './PlayerPreview';
 
@@ -69,6 +70,12 @@ class Battle extends Component {
               id="playerTwo"
             />}
         </div>
+        {playerOneImage && playerTwoImage &&
+          <Link
+            className="button"
+            to={}>
+            Battle
+          </Link>}
       </div>
     );
   }
