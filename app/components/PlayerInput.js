@@ -1,27 +1,13 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 class PlayerInput extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      username: '',
-    };
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleChange(e) {
-    const value = e.target.value;
-    this.setState(() => ({
-      username: value,
-    }));
-  }
   handleSubmit(e) {
-    e.preventDefault();
-    this.props.onSubmit(
-      this.props.id,
-      this.state.username,
-    );
+    e.preventDefault(this.username);
+    this.props.onSubmit(this.props.id, this.username);
   }
   render() {
     return (
@@ -34,13 +20,13 @@ class PlayerInput extends Component {
           placeholder="git username"
           type="text"
           autoComplete="off"
-          value={this.state.username}
-          onChange={this.handleChange}
+          onChange={(e) => {
+            this.username = e.target.value;
+          }}
         />
         <button
           className="button"
           type="submit"
-          disabled={!this.state.username}
         >
             Submit
           </button>
@@ -49,9 +35,9 @@ class PlayerInput extends Component {
   }
 }
 PlayerInput.propTypes = {
-  id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired,
+  id: React.PropTypes.string.isRequired,
+  label: React.PropTypes.string.isRequired,
+  onSubmit: React.PropTypes.func.isRequired,
 };
 PlayerInput.defaultProps = {
   label: 'Username',

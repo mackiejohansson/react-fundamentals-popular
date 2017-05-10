@@ -6,8 +6,8 @@ class Battle extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      playerOneName: '',
-      playerTwoName: '',
+      playerOneName: null,
+      playerTwoName: null,
       playerOneImage: null,
       playerTwoImage: null,
     };
@@ -15,19 +15,15 @@ class Battle extends Component {
     this.handleReset = this.handleReset.bind(this);
   }
   handleSubmit(id, username) {
-    this.setState(() => {
-      const newState = {};
-      newState[`${id}Name`] = username;
-      newState[`${id}Image`] = `https://github.com/${username}.png?size=200`;
-      return newState;
+    this.setState({
+      [`${id}Name`]: username,
+      [`${id}Image`]: `https://github.com/${username}.png?size=200`,
     });
   }
   handleReset(id) {
-    this.setState(() => {
-      const newState = {};
-      newState[`${id}Name`] = '';
-      newState[`${id}Image`] = null;
-      return newState;
+    this.setState({
+      [`${id}Name`]: null,
+      [`${id}Image`]: null,
     });
   }
   render() {
@@ -50,8 +46,8 @@ class Battle extends Component {
             <PlayerPreview
               avatar={playerOneImage}
               username={playerOneName}
-              onReset={this.handleReset}
               id="playerOne"
+              onReset={this.handleReset}
             />}
 
           {!playerTwoName &&
@@ -65,8 +61,8 @@ class Battle extends Component {
             <PlayerPreview
               avatar={playerTwoImage}
               username={playerTwoName}
-              onReset={this.handleReset}
               id="playerTwo"
+              onReset={this.handleReset}
             />}
         </div>
       </div>
