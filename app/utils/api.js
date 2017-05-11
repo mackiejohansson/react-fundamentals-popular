@@ -1,10 +1,13 @@
 import axios, { CancelToken } from 'axios';
+import Debug from 'debug';
 
 const source = CancelToken.source();
-
+const debug = Debug('app');
+/*
 const id = 'YOUR_CLIENT_ID';
 const sec = 'YOUR_SECRET_ID';
 const params = `?client_id=${id}&client_secret=${sec}`;
+*/
 
 const getProfile = username => (
   axios.get(`https://api.github.com/users/${username}`)
@@ -27,14 +30,34 @@ const calculateScore = (profile, repos) => {
 };
 
 const handleError = (error) => {
-  console.warn(error);
+  debug(error);
   return null;
 };
 
-module.exports = {
-  battle: (players) => {
+const getUserData = (player) => {
+  return axios.all([
+    getProfile(player),
+    getRepos(player),
+  ]).then((data) => {
+    const profile = data[0];
+    const repos = data[1];
+    return {
+      profile,
+      score: calculateScore(profile, repos),
+    };
+  });
+};
 
-  },
+const sortPlayers = (players) => {
+  players.sort((a, b) => b.score - a.score);
+};
+
+module.exports = {
+  battle: players => (
+    axios.all(players.map(getUserData))
+    .then(sortPlayers)
+    .cathc(handleError)
+  ),
   fetchPopularRepos: (language) => {
     const encodedURI = window.encodeURI(`https://api.github.com/search/repositories?q=stars:>1+language:${language}&sort=stars&order=desc&type=Repositories`);
     return axios.get(encodedURI, {
