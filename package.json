@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "axios": "^0.16.1",
+    "debug": "^2.6.6",
     "prop-types": "^15.5.9",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",

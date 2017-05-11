@@ -1,12 +1,17 @@
-import React, { Component } from 'react';
+import Debug from 'debug';
+import React from 'react';
 
-class Results extends Component {
-  render() {
-    console.log(this.props.location);
-    return (
-      <div>Results: {this.props.location.search}</div>
-    );
-  }
-}
+const debug = Debug('app');
 
-module.exports = Results;
+const Results = ({ location }) => {
+  debug(location);
+  return (
+    <div>Results: {location.search}</div>
+  );
+};
+
+Results.propTypes = {
+  location: React.PropTypes.objectOf(React.PropTypes.any).isRequired,
+};
+
+export default Results;

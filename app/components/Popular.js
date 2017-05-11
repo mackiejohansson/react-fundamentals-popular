@@ -10,7 +10,7 @@ const SelectLanguage = ({ selectedLanguage }) => {
         (
           <li key={lang}>
             <a
-              href={'/popular/' + lang.toLowerCase()}
+              href={`/popular/${lang.toLowerCase()}`}
               style={lang.toLowerCase() === selectedLanguage ? { color: '#d0021b' } : null}
             >
               {lang}
