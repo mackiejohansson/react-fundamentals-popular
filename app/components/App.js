@@ -5,6 +5,7 @@ import Nav from './Nav';
 import Popular from './Popular';
 import Home from './Home';
 import Battle from './Battle';
+import Results from './Results';
 
 const App = () =>
   (<Router>
@@ -13,7 +14,8 @@ const App = () =>
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/battle" exact component={Battle} />
-        <Route path="/popular/:lang" component={Popular} />
+        <Route path="/battle/results" exact component={Results} />
+        <Route path="/popular" component={Popular} />
         <Route
           render={() => <p>Not found</p>}
         />
