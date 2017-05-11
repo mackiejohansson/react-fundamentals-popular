@@ -2,18 +2,19 @@ import React, { Component } from 'react';
 import api from '../utils/api';
 
 
-const SelectLanguage = ({ selectedLanguage, onSelect }) => {
+const SelectLanguage = ({ selectedLanguage }) => {
   const languages = ['All', 'JavaScript', 'Ruby', 'Java', 'CSS', 'Python'];
   return (
     <ul className="languages">
       {languages.map(lang =>
         (
-          <li
-            onClick={() => onSelect(lang)}
-            key={lang}
-            style={lang === selectedLanguage ? { color: '#d0021b' } : null}
-          >
-            {lang}
+          <li key={lang}>
+            <a
+              href={'/popular/' + lang.toLowerCase()}
+              style={lang.toLowerCase() === selectedLanguage ? { color: '#d0021b' } : null}
+            >
+              {lang}
+            </a>
           </li>
         ),
       )}
@@ -51,17 +52,15 @@ RepoGrid.propTypes = {
 
 SelectLanguage.propTypes = {
   selectedLanguage: React.PropTypes.string.isRequired,
-  onSelect: React.PropTypes.func.isRequired,
 };
 
 class Popular extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedLanguage: 'All',
+      selectedLanguage: this.props.match.params.lang,
       repos: [],
     };
-    this.updateLanguage = this.updateLanguage.bind(this);
   }
   componentDidMount() {
     this.updateLanguage(this.state.selectedLanguage);
@@ -69,10 +68,10 @@ class Popular extends Component {
   /*  componentWillUnmount(){
     api.cancelFetch();
   }*/
-  updateLanguage(lang) {
-    api.fetchPopularRepos(lang)
+  updateLanguage() {
+    api.fetchPopularRepos(this.props.match.params.lang)
     .then((repos) => {
-      this.setState({ repos, selectedLanguage: lang });
+      this.setState({ repos, selectedLanguage: this.props.match.params.lang });
     });
   }
   render() {
@@ -80,12 +79,15 @@ class Popular extends Component {
       <div>
         <SelectLanguage
           selectedLanguage={this.state.selectedLanguage}
-          onSelect={this.updateLanguage}
         />
         <RepoGrid repos={this.state.repos} />
       </div>
     );
   }
 }
+
+Popular.propTypes = {
+  match: React.PropTypes.objectOf(React.PropTypes.any).isRequired,
+};
 
 module.exports = Popular;

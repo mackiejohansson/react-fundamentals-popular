@@ -15,7 +15,7 @@ const Nav = () =>
          </NavLink>
        </li>
        <li>
-         <NavLink activeClassName="active" to="/popular">
+         <NavLink activeClassName="active" to="/popular/all">
             Popular
          </NavLink>
        </li>

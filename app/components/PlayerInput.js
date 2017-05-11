@@ -6,8 +6,8 @@ class PlayerInput extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleSubmit(e) {
-    e.preventDefault(this.username);
-    this.props.onSubmit(this.props.id, this.username);
+    e.preventDefault();
+    this.props.onSubmit(this.props.id, e.target.username.value);
   }
   render() {
     return (
@@ -17,12 +17,10 @@ class PlayerInput extends Component {
         </label>
         <input
           id="username"
+          name="username"
           placeholder="git username"
           type="text"
           autoComplete="off"
-          onChange={(e) => {
-            this.username = e.target.value;
-          }}
         />
         <button
           className="button"
