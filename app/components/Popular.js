@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import api from '../utils/api';
 
 
-const SelectLanguage = ({ selectedLanguage }) => {
+const SelectLanguage = () => {
   const languages = ['All', 'JavaScript', 'Ruby', 'Java', 'CSS', 'Python'];
   return (
     <ul className="languages">
       {languages.map(lang =>
         (
           <li key={lang}>
-            <a
-              href={`/popular/${lang.toLowerCase()}`}
-              style={lang.toLowerCase() === selectedLanguage ? { color: '#d0021b' } : null}
-            >
+            <NavLink activeClassName="active" to={`/popular/${lang.toLowerCase()}`}>
               {lang}
-            </a>
+            </NavLink>
           </li>
         ),
       )}
@@ -50,20 +48,18 @@ RepoGrid.propTypes = {
   repos: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
 };
 
-SelectLanguage.propTypes = {
-  selectedLanguage: React.PropTypes.string.isRequired,
-};
-
 class Popular extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedLanguage: this.props.match.params.lang,
       repos: [],
     };
   }
   componentDidMount() {
     this.updateLanguage(this.state.selectedLanguage);
+  }
+  componentWillReceiveProps(nextProps) {
+    this.updateLanguage(nextProps.match.params.lang);
   }
   /*  componentWillUnmount(){
     api.cancelFetch();
@@ -71,15 +67,13 @@ class Popular extends Component {
   updateLanguage() {
     api.fetchPopularRepos(this.props.match.params.lang)
     .then((repos) => {
-      this.setState({ repos, selectedLanguage: this.props.match.params.lang });
+      this.setState({ repos });
     });
   }
   render() {
     return (
       <div>
-        <SelectLanguage
-          selectedLanguage={this.state.selectedLanguage}
-        />
+        <SelectLanguage />
         <RepoGrid repos={this.state.repos} />
       </div>
     );
@@ -90,4 +84,4 @@ Popular.propTypes = {
   match: React.PropTypes.objectOf(React.PropTypes.any).isRequired,
 };
 
-module.exports = Popular;
+export default Popular;

@@ -81,4 +81,9 @@ class Battle extends Component {
     );
   }
 }
-module.exports = Battle;
+
+Battle.propTypes = {
+  match: React.PropTypes.objectOf(React.PropTypes.any).isRequired,
+};
+
+export default Battle;

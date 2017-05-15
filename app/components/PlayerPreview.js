@@ -23,4 +23,4 @@ PlayerPreview.propTypes = {
   onReset: React.PropTypes.func.isRequired,
   id: React.PropTypes.string.isRequired,
 };
-module.exports = PlayerPreview;
+export default PlayerPreview;

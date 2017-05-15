@@ -32,12 +32,15 @@ class PlayerInput extends Component {
     );
   }
 }
+
 PlayerInput.propTypes = {
   id: React.PropTypes.string.isRequired,
   label: React.PropTypes.string.isRequired,
   onSubmit: React.PropTypes.func.isRequired,
 };
+
 PlayerInput.defaultProps = {
   label: 'Username',
 };
-module.exports = PlayerInput;
+
+export default PlayerInput;
