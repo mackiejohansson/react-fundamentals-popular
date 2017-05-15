@@ -15,7 +15,7 @@ const App = () =>
         <Route path="/" exact component={Home} />
         <Route path="/battle" exact component={Battle} />
         <Route path="/battle/results" exact component={Results} />
-        <Route path="/popular" component={Popular} />
+        <Route path="/popular/:lang" component={Popular} />
         <Route
           render={() => <p>Not found</p>}
         />
